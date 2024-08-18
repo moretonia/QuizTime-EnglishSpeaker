@@ -1,16 +1,20 @@
-# QuizTime-EnglishSelection-4.75
- Finally, you can choose English as your mother tongue.
- 
-In order to make English a 'mother tongue', it is necessary to remove these quizzes: 'Translate' and 'Spell'
+# QuizTime-EnglishSpeaker
 
-both of these require a language other than English.
+Finally, you can choose English as your mother tongue.
+ 
+In order to make English a 'mother tongue', these quiz types need to be removed from the topics quizzes: 'Translate' and 'Spell'
+
+Note that these two quiz types have already been removed from the theme exams which appear after the topics quizzes.
+
+Both of these require a language other than English.
 
 'Dictionary' button moves to top of page and gets a new name: 'Words'.
 
 Remaining quizzes 'Match', 'Pronounce', 'Listen' and 'Look' are arranged in two rows of two.
 
-Theme quiz, which appears after the other quizzes, must be programmed to only select from the remaining quiz types.
-
 A new button, 'Movies', is now created at the bottom of the page, and shows information for users and a sample movie.
-# QuizTime-EnglishSelection
-# QuizTime-SelectEnglish
+
+NB AdColony, Flurry, Kochava Core, and Kochava Tracker must be included (remove #in Podfile) before Pod Install
+
+# QuizTime-EnglishSpeaker
+
