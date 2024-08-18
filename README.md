@@ -14,7 +14,7 @@ Remaining quizzes 'Match', 'Pronounce', 'Listen' and 'Look' are arranged in two 
 
 A new button, 'Movies', is now created at the bottom of the page, and shows information for users and a sample movie.
 
-NB AdColony, Flurry, Kochava Core, and Kochava Tracker must be included (remove #in Podfile) before Pod Install
+NB AdColony, Flurry, Kochava Core, and Kochava Tracker must be included (remove # from Podfile) before Pod Install
 
 # QuizTime-EnglishSpeaker
 
