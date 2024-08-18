@@ -1,0 +1,6 @@
+framework module Pods_EnglishForBeginnersTests {
+  umbrella header "Pods-EnglishForBeginnersTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
