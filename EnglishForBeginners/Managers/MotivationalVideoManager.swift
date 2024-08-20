@@ -13,7 +13,9 @@ class MotivationalVideoManager {
                              "https://drongoapps.com/Motivational_Movies")!
     static let filenameFormat = "mtvnl_%d.mp4"
     static let maxVideoNumber = 24
-    
+
+    static let movies = "movies%@.mp4"
+
     static let shared = MotivationalVideoManager()
     
     var nextVideoNumber: Int {
@@ -35,5 +37,12 @@ class MotivationalVideoManager {
     
     func setNextVideoAsLast() {
         UserDefaultsManager.shared.lastMotivationalVideoNumber = nextVideoNumber
+    }
+
+    func getMovies(for number: String) -> URL {
+        let value = String(format: Self.movies, number)
+        return Self.baseURL.appendingPathComponent(
+            value
+        )
     }
 }

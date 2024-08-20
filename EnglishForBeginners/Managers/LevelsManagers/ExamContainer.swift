@@ -71,6 +71,7 @@ class ExamContainer: BaseQuestionContainer, QuestionsProvider, QuestionsValidato
     }
     
     func fillQuestionsStack(with words: [VocabularyItem]) {
+
         var shuffledWords = words
         shuffledWords.shuffle()
         
@@ -90,7 +91,7 @@ class ExamContainer: BaseQuestionContainer, QuestionsProvider, QuestionsValidato
                 }
             }
         }
-        
+
         for word in shuffledWordsWithoutDuplicates {
             if let wordName = word.word {
                 if questionsStack.count < roundNumbers {

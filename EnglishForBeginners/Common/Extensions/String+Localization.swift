@@ -33,3 +33,9 @@ extension String {
         return localized(language.currentLocale)
     }
 }
+
+extension String {
+    func toInt() -> Int {
+        Int(self) ?? 0
+    }
+}

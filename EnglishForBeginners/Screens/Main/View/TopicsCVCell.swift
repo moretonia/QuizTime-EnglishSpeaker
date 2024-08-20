@@ -9,9 +9,10 @@
 import UIKit
 import ORCommonUI_Swift
 
-protocol TopicsCVCellDelegate: class {
+protocol TopicsCVCellDelegate: AnyObject {
     func dictionaryPressed(topicsCVCell: TopicsCVCell)
     func lessonPressed(topicsCVCell: TopicsCVCell, lessonType: LessonType)
+    func moviesPressed(topicsCVCell: TopicsCVCell)
 }
 
 class TopicsCVCell: UICollectionViewCell {
@@ -45,9 +46,9 @@ class TopicsCVCell: UICollectionViewCell {
             lessonControlLookType,
             lessonControlListenType,
             lessonControlAssociation,
-            lessonControlTranslation,
-            lessonControlPronunciation,
-            lessonControlSpelling
+            //lessonControlTranslation, /// This is commented to hide it
+            lessonControlPronunciation
+            //,lessonControlSpelling /// This is commented to hide it
         ]
     }()
     
@@ -79,12 +80,18 @@ class TopicsCVCell: UICollectionViewCell {
         
         stackViewTop.addArrangedSubview(lessonControlLookType)
         stackViewTop.addArrangedSubview(lessonControlListenType)
-      
+
+        /// These two lines are added after comment the below code.
+        stackViewMiddle.addArrangedSubview(lessonControlAssociation)
+        stackViewMiddle.addArrangedSubview(lessonControlPronunciation)
+       /// Below code is commented to hide the Translation and Spelling section
+        /*
         stackViewMiddle.addArrangedSubview(lessonControlAssociation)
         stackViewMiddle.addArrangedSubview(lessonControlTranslation)
 
         stackViewBottom.addArrangedSubview(lessonControlPronunciation)
         stackViewBottom.addArrangedSubview(lessonControlSpelling)
+        */
     }
     
     private func loadAndSetupLessonControl(lessonType: LessonType) -> LessonControl {
@@ -123,7 +130,10 @@ class TopicsCVCell: UICollectionViewCell {
     @IBAction func dictionaryPressed(_ sender: Any) {
         delegate?.dictionaryPressed(topicsCVCell: self)
     }
-    
+
+    @IBAction func moviesPressed(_ sender: Any) {
+        delegate?.moviesPressed(topicsCVCell: self)
+    }
 }
 
 

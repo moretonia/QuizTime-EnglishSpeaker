@@ -265,15 +265,15 @@ class ThemeManager: BaseManager {
         
         switch starCount {
         //case 50..<58:
-        case 50..<75:
+        case 20..<23:
             if type < .bronze {
                 type = .bronze
             }
         //case 58..<64:
-        case 75..<100:
+        case 30..<40:
             type = .silver
         //case let x where x >= 64:
-        case let x where x >= 100:
+        case let x where x >= 40:
             type = .gold
         default:
             break

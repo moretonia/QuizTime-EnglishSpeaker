@@ -10,8 +10,12 @@ import UIKit
 import ORCommonUI_Swift
 import ORCommonCode_Swift
 
+import AVFoundation
+import AVKit
+import Reachability
+
 class TopicsViewController: BaseVC, UICollectionViewDelegate,
-    UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, TopicsCVCellDelegate, ThemeExamCVCellDelegate {
+    UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ThemeExamCVCellDelegate {
     
     @IBOutlet weak var topicsPageControl: UIPageControl!
     @IBOutlet weak var topicsCollectionView: UICollectionView!
@@ -32,7 +36,21 @@ class TopicsViewController: BaseVC, UICollectionViewDelegate,
     var theme: Theme!
     var topics = [Topic]()
     var productInfo: ProductInfo?
-    
+
+    var activityIndicator: UIActivityIndicatorView?
+    var stars: Int = 0
+    var experience: Int = 0
+    var topic: Topic?
+    lazy var playerViewController: AVPlayerViewController = {
+        let playerViewController = AVPlayerViewController()
+        playerViewController.showsPlaybackControls = true
+        return playerViewController
+    }()
+    var currentMovieNumber = "1"
+    let myNextButton = UIButton(type: .system)
+    let closeButton = UIButton(type: .system)
+
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -231,41 +249,8 @@ class TopicsViewController: BaseVC, UICollectionViewDelegate,
         
         return CGSize(width: thisWidth, height: UIScreen.main.bounds.height)
     }
-    
-    // MARK: - TopicsCVCellDelegate
-    
-    func dictionaryPressed(topicsCVCell: TopicsCVCell) {
-        guard let index = topicsCollectionView.indexPath(for: topicsCVCell)?.row, index < topics.count else {
-            return
-        }
-        
-        let selectedTopic = topics[index]
-        
-        let dictionaryVC = VCEnum.dictionary.vc as! DictionaryVC
-        dictionaryVC.itemsIds = selectedTopic.wordsIds
-        dictionaryVC.themeName = theme.name!
-        
-        AnalyticsHelper.logEventWithParameters(event: .ME_Dictionary_Opened, themeId: theme.name!, topicId: topics[index].name!, typeOfLesson: nil, starsCount: nil, language: nil)
-        
-        navigationController?.pushViewController(dictionaryVC, animated: true)
-    }
-    
-    func lessonPressed(topicsCVCell: TopicsCVCell, lessonType: LessonType) {
-        guard let index = topicsCollectionView.indexPath(for: topicsCVCell)?.row, index < topics.count else {
-            return
-        }
-        
-        let selectedTopic = topics[index]
-        
-        let lessonVC = VCEnum.levels.vc as! LevelsVC
-        lessonVC.lessonType = lessonType
-        lessonVC.topic = selectedTopic
-        
-        navigationController?.pushViewController(lessonVC, animated: true)
-    }
-    
+
     // MARK: - ThemeExamCVCellDelegate
-    
     func examButtonPressed() {
         let examVC = VCEnum.levels.vc as! LevelsVC
         examVC.lessonType = nil
@@ -275,7 +260,6 @@ class TopicsViewController: BaseVC, UICollectionViewDelegate,
     }
     
     // MARK: - UIScrollViewDelegate
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         topicsPageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
@@ -285,3 +269,36 @@ class TopicsViewController: BaseVC, UICollectionViewDelegate,
     }
 }
 
+// MARK: - TopicsCVCellDelegate
+extension TopicsViewController: TopicsCVCellDelegate {
+    func dictionaryPressed(topicsCVCell: TopicsCVCell) {
+        guard let index = topicsCollectionView.indexPath(for: topicsCVCell)?.row, index < topics.count else {
+            return
+        }
+
+        let selectedTopic = topics[index]
+
+        let dictionaryVC = VCEnum.dictionary.vc as! DictionaryVC
+        dictionaryVC.itemsIds = selectedTopic.wordsIds
+        dictionaryVC.themeName = theme.name!
+
+        AnalyticsHelper.logEventWithParameters(event: .ME_Dictionary_Opened, themeId: theme.name!, topicId: topics[index].name!, typeOfLesson: nil, starsCount: nil, language: nil)
+
+        navigationController?.pushViewController(dictionaryVC, animated: true)
+    }
+
+    func lessonPressed(topicsCVCell: TopicsCVCell, lessonType: LessonType) {
+        guard let index = topicsCollectionView.indexPath(for: topicsCVCell)?.row, index < topics.count else {
+            return
+        }
+        let selectedTopic = topics[index]
+        let lessonVC = VCEnum.levels.vc as! LevelsVC
+        lessonVC.lessonType = lessonType
+        lessonVC.topic = selectedTopic
+        navigationController?.pushViewController(lessonVC, animated: true)
+    }
+
+    func moviesPressed(topicsCVCell: TopicsCVCell) {
+       
+    }
+}

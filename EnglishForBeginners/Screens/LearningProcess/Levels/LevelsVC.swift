@@ -9,7 +9,7 @@
 import ORCommonUI_Swift
 import UIKit
 
-class LevelsVC: BaseVC, LevelFailedDelegate, LessonActionViewDelegate, SpeechSynthesizerDelegate {
+class LevelsVC: BaseVC, LevelFailedDelegate, LessonActionViewDelegate {
     @IBOutlet var contentView: UIView!
     @IBOutlet var progressView: RoundRectProgressBar!
     
@@ -28,7 +28,7 @@ class LevelsVC: BaseVC, LevelFailedDelegate, LessonActionViewDelegate, SpeechSyn
     @IBOutlet var buttonSpeakWord: ORCustomContentButton!
     @IBOutlet var labelWord: UILabel!
     @IBOutlet var questionImageView: UIImageView!
-    
+
     weak var pageViewController: UIPageViewController!
     var speechSynthesizer = SpeechSynthesizer()
     
@@ -521,7 +521,6 @@ class LevelsVC: BaseVC, LevelFailedDelegate, LessonActionViewDelegate, SpeechSyn
     }
     
     // MARK: - LessonActionViewDelegate
-    
     func nextButtonPressed(state: LessonActionView.State) {
         hideLessonActionView { [weak self] _ in
             guard let sSelf = self else {
@@ -560,9 +559,10 @@ class LevelsVC: BaseVC, LevelFailedDelegate, LessonActionViewDelegate, SpeechSyn
             }
         }
     }
-    
-    // MARK: - SpeechSynthesizerDelegate
-    
+}
+
+// MARK: - SpeechSynthesizerDelegate
+extension LevelsVC: SpeechSynthesizerDelegate {
     func speechSynthesizerDidFinish() {
         DispatchQueue.main.async { [weak self] in
             guard let sself = self else {

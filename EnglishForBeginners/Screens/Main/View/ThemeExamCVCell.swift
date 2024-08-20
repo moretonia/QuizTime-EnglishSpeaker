@@ -9,7 +9,7 @@
 import UIKit
 import ORCommonUI_Swift
 
-protocol ThemeExamCVCellDelegate: class {
+protocol ThemeExamCVCellDelegate: AnyObject {
     func examButtonPressed()
 }
 
@@ -50,33 +50,32 @@ class ThemeExamCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         labelExperience.text = "+\(ExamConfig.experienceForOthersExams) xp"
     }
-    
+
     func changeState(_ state: ExamState) {
-        
+
         labelExamDescription.text = state.examDescription
-        
+
         let isThemePurchased = state != .notPurchased
-        
+
         viewPassExamAgainInfo.isHidden = !isThemePurchased || state != .passAgain
         viewPassExamFirstTimeInfo.isHidden = !isThemePurchased || state == .passAgain
         viewLocked.isHidden = isThemePurchased
         buttonStartExam.isHidden = !isThemePurchased
         labelStarsCount.isHidden = !isThemePurchased
         labelExamDescription.isHidden = !isThemePurchased
-        
+
         buttonStartExam.backgroundColor = .white
         buttonStartExam.setTitleColor(AppColors.examScreenOpenedButtonTitle, for: .normal)
         buttonStartExam.setImage(nil, for: .normal)
         buttonStartExam.alpha = 1.0
-        
+
         buttonStartExam.isEnabled = true
-        
+
         let buttonTitle = state == .passAgain ? "repeat".localizedWithCurrentLanguage() : "quiz".localizedWithCurrentLanguage()
         buttonStartExam.setTitle(buttonTitle, for: .normal)
-        
+
         if state == .locked {
             buttonStartExam.isEnabled = false
             buttonStartExam.alpha = 0.5
@@ -84,13 +83,12 @@ class ThemeExamCVCell: UICollectionViewCell {
             buttonStartExam.tintColor = AppColors.examScreenOpenedButtonTitle
         }
     }
-    
+
     func updateProgress(_ starsCount: Int) {
         labelStarsCount.text = "\(starsCount)/\(Constants.maximumStarsAmount) "
     }
-    
+
     // MARK: - Actions
-    
     @IBAction func examButtonPressed(_ sender: Any) {
         delegate?.examButtonPressed()
     }
