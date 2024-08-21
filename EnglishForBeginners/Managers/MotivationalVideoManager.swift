@@ -14,7 +14,7 @@ class MotivationalVideoManager {
     static let filenameFormat = "mtvnl_%d.mp4"
     static let maxVideoNumber = 24
 
-    static let movies = "movies%@.mp4"
+    static let movies = "Movies%@.mp4"
 
     static let shared = MotivationalVideoManager()
     

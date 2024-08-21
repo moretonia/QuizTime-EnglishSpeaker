@@ -78,12 +78,12 @@ class TopicsCVCell: UICollectionViewCell {
         self.lessonControlPronunciation = loadAndSetupLessonControl(lessonType: .pronunciation)
         self.lessonControlSpelling = loadAndSetupLessonControl(lessonType: .spelling)
         
-        stackViewTop.addArrangedSubview(lessonControlLookType)
-        stackViewTop.addArrangedSubview(lessonControlListenType)
+        stackViewTop.addArrangedSubview(lessonControlAssociation)
+        stackViewTop.addArrangedSubview(lessonControlPronunciation)
 
         /// These two lines are added after comment the below code.
-        stackViewMiddle.addArrangedSubview(lessonControlAssociation)
-        stackViewMiddle.addArrangedSubview(lessonControlPronunciation)
+        stackViewMiddle.addArrangedSubview(lessonControlLookType)
+        stackViewMiddle.addArrangedSubview(lessonControlListenType)
        /// Below code is commented to hide the Translation and Spelling section
         /*
         stackViewMiddle.addArrangedSubview(lessonControlAssociation)

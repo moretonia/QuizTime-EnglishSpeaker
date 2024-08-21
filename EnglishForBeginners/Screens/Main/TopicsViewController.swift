@@ -299,6 +299,124 @@ extension TopicsViewController: TopicsCVCellDelegate {
     }
 
     func moviesPressed(topicsCVCell: TopicsCVCell) {
-       
+        let url = MotivationalVideoManager.shared.getMovies(for: currentMovieNumber)
+        prepareVideoPlayer(videoURL: url)
+    }
+}
+
+extension TopicsViewController {
+    private func addButtonsOnVideoPlayer() {
+        addNextButton()
+        addCloseButton()
+    }
+    private func addNextButton() {
+        myNextButton.setTitle("Next", for: .normal)
+        myNextButton.setTitleColor(UIColor.white, for: .normal)
+        myNextButton.backgroundColor = UIColor(0, 174, 239)
+        myNextButton.addTarget(self, action: #selector(playNextVideo), for: .touchUpInside)
+        myNextButton.layer.cornerRadius = 20
+        view.addSubview(myNextButton)
+        myNextButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            myNextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: +60),
+            myNextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            myNextButton.widthAnchor.constraint(equalToConstant: 100),
+            myNextButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        myNextButton.bringSubviewToFront(playerViewController.view)
+        myNextButton.alpha = 0
+    }
+    private func addCloseButton() {
+        closeButton.setTitle("Close", for: .normal)
+        closeButton.setTitleColor(UIColor.white, for: .normal)
+        closeButton.backgroundColor = UIColor(0, 174, 239)
+        closeButton.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
+        closeButton.layer.cornerRadius = 20
+        view.addSubview(closeButton)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -60),
+            closeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            closeButton.widthAnchor.constraint(equalToConstant: 100),
+            closeButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        closeButton.bringSubviewToFront(playerViewController.view)
+        closeButton.alpha = 0
+    }
+
+    @objc func closeVideo() {
+        removePlayer()
+    }
+
+    @objc func playNextVideo() {
+        var value = currentMovieNumber.toInt()
+        myNextButton.setTitle("Next", for: .normal)
+        if value > 0, value < 3 {
+            value += 1
+            currentMovieNumber = "\(value)"
+        } else {
+            if value == 3, myNextButton.titleLabel?.text != "Repeat" {
+                currentMovieNumber = "\(value)"
+                myNextButton.setTitle("Repeat", for: .normal)
+            } else {
+                value = 1
+                currentMovieNumber = "\(value)"
+            }
+        }
+        let url = MotivationalVideoManager.shared.getMovies(for: currentMovieNumber)
+        playerViewController.player?.pause()
+        playVideo(with: url)
+    }
+
+    private func prepareVideoPlayer(videoURL: URL) {
+        if activityIndicator == nil {
+            if #available(iOS 13.0, *) {
+                activityIndicator = UIActivityIndicatorView(style: .large)
+            } else {
+                activityIndicator = UIActivityIndicatorView(style: .gray)
+            }
+                activityIndicator?.center = view.center
+                activityIndicator?.hidesWhenStopped = true
+                if let indicator = activityIndicator {
+                    playerViewController.view.addSubview(indicator)
+                }
+            }
+
+        activityIndicator?.startAnimating()
+        guard
+            let reachability = try? Reachability(),
+            [.cellular, .wifi].contains(reachability.connection)
+        else {
+            activityIndicator?.stopAnimating()
+            return
+        }
+
+        addChild(playerViewController)
+        playerViewController.view.frame = view.frame
+        view.addSubview(playerViewController.view)
+        playerViewController.view.alpha = 0
+        addButtonsOnVideoPlayer()
+        playVideo(with: videoURL)
+    }
+
+    private func playVideo(with url: URL) {
+        let player = AVPlayer(url: url)
+        player.volume = 5
+        playerViewController.player = player
+        UIView.animate(withDuration: 0.5, delay: 0, options: []) { [weak self] in
+            self?.playerViewController.view.alpha = 1
+            self?.myNextButton.alpha = 1
+            self?.closeButton.alpha = 1
+        } completion: { _ in
+            self.activityIndicator?.stopAnimating()
+            player.play()
+        }
+    }
+
+    private func removePlayer() {
+        playerViewController.removeFromParent()
+        playerViewController.view.removeFromSuperview()
+        myNextButton.removeFromSuperview()
+        closeButton.removeFromSuperview()
     }
 }

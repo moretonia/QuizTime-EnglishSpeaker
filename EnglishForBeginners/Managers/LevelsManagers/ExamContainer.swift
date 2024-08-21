@@ -71,7 +71,6 @@ class ExamContainer: BaseQuestionContainer, QuestionsProvider, QuestionsValidato
     }
     
     func fillQuestionsStack(with words: [VocabularyItem]) {
-
         var shuffledWords = words
         shuffledWords.shuffle()
         
@@ -80,7 +79,15 @@ class ExamContainer: BaseQuestionContainer, QuestionsProvider, QuestionsValidato
         for word in shuffledWords {
             if let wordName = word.word {
                 let index = shuffledWordsWithoutDuplicates.firstIndex(where: { (question) -> Bool in
-                    return question.word == wordName || question.nativeWord?.word == word.nativeWord?.word
+                    var result = false
+                    if question.word == wordName {
+                        result = true
+                        return result
+                    }
+                    if let questionWord = question.nativeWord?.word, let childWord = word.nativeWord.word {
+                        result = questionWord == childWord
+                    }
+                    return result //question.word == wordName || question.nativeWord?.word == word.nativeWord?.word
                 })
                 
                 if index == nil {
@@ -91,6 +98,9 @@ class ExamContainer: BaseQuestionContainer, QuestionsProvider, QuestionsValidato
                 }
             }
         }
+        /// Commented all the above peace of code and replace with the one line. The line is
+        ///  let shuffledWordsWithoutDuplicates = Array(Set(words.compactMap {$0.word != nil ? $0 : nil})).shuffled()
+        /// Don't worry about the nil, because compactMap does not keep the nil, Dont worry about the Duplicate values, because Set never keep duplicate any Value.
 
         for word in shuffledWordsWithoutDuplicates {
             if let wordName = word.word {
