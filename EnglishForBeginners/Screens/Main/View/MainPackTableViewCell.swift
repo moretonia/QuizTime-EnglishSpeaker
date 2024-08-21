@@ -9,7 +9,7 @@
 import UIKit
 import PureLayout
 
-protocol MainPackCellDelegate: class {
+protocol MainPackCellDelegate: AnyObject {
     func buy(cell: MainPackTableViewCell)
     func timeIsGone(cell: MainPackTableViewCell)
 }

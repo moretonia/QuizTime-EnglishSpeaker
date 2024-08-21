@@ -9,7 +9,7 @@
 import UIKit
 import ORCommonUI_Swift
 
-protocol LessonActionViewDelegate: class {
+protocol LessonActionViewDelegate: AnyObject {
     func nextButtonPressed(state: LessonActionView.State)
 }
 

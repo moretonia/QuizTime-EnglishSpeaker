@@ -18,7 +18,7 @@ protocol SpeechRecognizerProtocol {
     var isAvailable: Bool {get}
 }
 
-protocol SpeechRecognizerDelegate: class{
+protocol SpeechRecognizerDelegate: AnyObject {
     func speechRecognizer(_ speechRecognizer: SpeechRecognizer, didRecognized text: String)
     func speechRecognizerStarted()
 }

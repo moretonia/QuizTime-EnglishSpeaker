@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol DictionaryDetailCellDelegate: class {
+protocol DictionaryDetailCellDelegate: AnyObject {
     func speakButtonPressed(dictionaryDetailCVCell: DictionaryDetailCell)
 }
 

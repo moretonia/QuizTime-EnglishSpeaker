@@ -84,7 +84,7 @@ class ExamContainer: BaseQuestionContainer, QuestionsProvider, QuestionsValidato
                         result = true
                         return result
                     }
-                    if let questionWord = question.nativeWord?.word, let childWord = word.nativeWord.word {
+                    if let questionWord = question.nativeWord?.word, let childWord = word.nativeWord?.word {
                         result = questionWord == childWord
                     }
                     return result //question.word == wordName || question.nativeWord?.word == word.nativeWord?.word

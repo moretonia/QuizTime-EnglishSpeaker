@@ -12,7 +12,7 @@ import FBSDKShareKit
 import FBSDKLoginKit
 
 
-protocol FBSharerDelegate : class {
+protocol FBSharerDelegate : AnyObject {
     func fbSharerDidFailToLogin(_ sharer: FBSharer, withError error: Error)
     func fbSharerDidFailedToShare(sharer: FBSharer, withError error: Error)
     func userDidCancelSharingToFb(for sharer: FBSharer)

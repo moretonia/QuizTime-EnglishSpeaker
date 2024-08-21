@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol QuestionsProvider: class {
-    
+protocol QuestionsProvider: AnyObject {
+
     var title: String {get}
     var canSkipQuestion: Bool {get}
     var lessonType: LessonType {get}
@@ -19,7 +19,7 @@ protocol QuestionsProvider: class {
     func skipAndGetNextQuestion() -> (question: Question?, levelProgress: Float?)
 }
 
-protocol QuestionsValidator: class {
+protocol QuestionsValidator: AnyObject {
     
     var mistakesCounter: Int {get}
     

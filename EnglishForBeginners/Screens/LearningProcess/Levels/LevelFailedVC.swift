@@ -9,7 +9,7 @@
 import UIKit
 import ORCommonUI_Swift
 
-protocol LevelFailedDelegate: class {
+protocol LevelFailedDelegate: AnyObject {
     func backToThemePressed()
     func retryPressed()
 }

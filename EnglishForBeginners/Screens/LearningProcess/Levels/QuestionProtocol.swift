@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol QuestionProtocol: class {
+protocol QuestionProtocol: AnyObject {
     var viewController: UIViewController? {get}
     
     var question: Question! {get set}

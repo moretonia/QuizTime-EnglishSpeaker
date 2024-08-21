@@ -9,7 +9,7 @@
 import UIKit
 import UICircularProgressRing
 
-protocol MainTableViewCellDelegate: class {
+protocol MainTableViewCellDelegate: AnyObject {
     func buyButtonPressed(in cell: MainTableViewCell)
     func studyButtonPressed(in cell: MainTableViewCell)
     

@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-protocol SpeechSynthesizerDelegate: class {
+protocol SpeechSynthesizerDelegate: AnyObject {
     func speechSynthesizerDidFinish()
 }
 
