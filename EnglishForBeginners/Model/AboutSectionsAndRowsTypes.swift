@@ -95,9 +95,9 @@ enum AboutMechanicsType: Int {
         case .pronunciation:
             return LessonType.pronunciation.icon
         case .spelling:
-            return LessonType.spelling.icon
+            return LessonType.lookType.icon
         case .translator:
-            return LessonType.translation.icon
+            return LessonType.listenType.icon
         default:
             return nil
         }

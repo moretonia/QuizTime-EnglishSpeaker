@@ -18,7 +18,12 @@ enum LessonType: String {
     case lookType
     
     static var types: [LessonType] {
-        return [.association, .translation, .pronunciation, .spelling, .listenType, .lookType]
+        return [.association,
+                //.translation,
+                .pronunciation,
+                //.spelling,
+                .listenType,
+                .lookType]
     }
     
     private var lessonTypeString: String {

@@ -102,9 +102,9 @@ enum ProfileSectionType: Int {
         case .experience:
             return 1
         case .skill:
-            return 6
+            return LessonType.types.count
         case .global:
-            return 4
+            return OtherCellType.globalTypes.count
         case .local:
             return isDebug ? 3 : 2
         }
@@ -133,7 +133,11 @@ enum OtherCellType {
     case removeICloudInfo
     
     static var globalTypes: [OtherCellType] {
-        return [.leaderboard, .restore, .rate, .share]
+        return [.leaderboard,
+                .restore,
+                .rate
+                //, .share
+        ]
     }
     
     static var localTypes: [OtherCellType] {
